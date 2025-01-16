@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Estimate calories burned for various activities or log your daily thoughts and moods with our easy-to-use tools. Stay healthy and track your progress!">
+    <meta name="keywords" content="calorie burn calculator, mental health journal, activity tracker, mood tracker, health tools, fitness tools">
+    <meta name="author" content="Your Name">
+    <meta name="robots" content="index, follow">
+    <title>Calorie Burn Calculator & Mental Health Journal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #fbc2eb, #a6c1ee);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .tool-container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+        .tool-container:hover {
+            transform: scale(1.02);
+        }
+        h1 {
+            font-size: 24px;
+            color: #4A00E0;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: 3px solid #FFD700;
+        }
+        button {
+            background: #6A5ACD;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #483D8B;
+            transform: scale(1.05);
+        }
+        button:focus {
+            outline: 3px solid #FFD700;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #4A00E0;
+        }
+    </style>
+</head>
+<body>
+    <div class="tool-container" id="calorie-burn-calculator">
+        <h1>Calorie Burn Calculator</h1>
+        <div class="input-group">
+            <label for="running">Running (minutes)</label>
+            <input type="number" id="running" placeholder="Enter minutes">
+        </div>
+        <div class="input-group">
+            <label for="walking">Walking (minutes)</label>
+            <input type="number" id="walking" placeholder="Enter minutes">
+        </div>
+        <div class="input-group">
+            <label for="cycling">Cycling (minutes)</label>
+            <input type="number" id="cycling" placeholder="Enter minutes">
+        </div>
+        <div class="input-group">
+            <label for="swimming">Swimming (minutes)</label>
+            <input type="number" id="swimming" placeholder="Enter minutes">
+        </div>
+        <button onclick="calculateCalories()">Calculate Total Calories</button>
+        <div class="result" id="calorie-result"></div>
+    </div>
+
+    <div class="tool-container" id="mental-health-journal">
+        <h1>Mental Health Journal</h1>
+        <div class="input-group">
+            <label for="mood">How are you feeling today?</label>
+            <input type="text" id="mood" placeholder="e.g., happy, stressed, relaxed">
+        </div>
+        <div class="input-group">
+            <label for="thoughts">Write down your thoughts</label>
+            <textarea id="thoughts" rows="5" placeholder="Express your feelings..."></textarea>
+        </div>
+        <button onclick="saveJournalEntry()">Download Journal Entry</button>
+        <div class="result" id="journal-result"></div>
+    </div>
+
+    <script>
+        function calculateCalories() {
+            const running = parseInt(document.getElementById('running').value, 10) || 0;
+            const walking = parseInt(document.getElementById('walking').value, 10) || 0;
+            const cycling = parseInt(document.getElementById('cycling').value, 10) || 0;
+            const swimming = parseInt(document.getElementById('swimming').value, 10) || 0;
+
+            const totalCalories = (running * 10) + (walking * 4) + (cycling * 8) + (swimming * 9);
+
+            document.getElementById('calorie-result').textContent = `You burned approximately ${totalCalories} calories in total.`;
+        }
+
+        function saveJournalEntry() {
+            const mood = document.getElementById('mood').value.trim();
+            const thoughts = document.getElementById('thoughts').value.trim();
+            const date = new Date().toLocaleDateString();
+
+            if (!mood || !thoughts) {
+                document.getElementById('journal-result').textContent = "Please fill in both fields.";
+                return;
+            }
+
+            const journalContent = `Date: ${date}\nMood: ${mood}\nThoughts: ${thoughts}`;
+
+            const blob = new Blob([journalContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Journal_Entry_${date.replace(/\//g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            document.getElementById('journal-result').textContent = "Your journal entry has been downloaded.";
+        }
+    </script>
+</body>
+</html>
