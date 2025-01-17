@@ -10,6 +10,7 @@
     <title>Calorie Burn Calculator & Mental Health Journal</title>
     <script defer src="/_vercel/insights/script.js"></script>
     <style>
+        /* Global Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -21,16 +22,28 @@
             align-items: center;
             min-height: 100vh;
         }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
         .tool-container {
             background: #fff;
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 90%;
+            width: 100%;
             max-width: 500px;
             padding: 20px;
             text-align: center;
-            margin: 20px;
+            margin: 10px;
             transition: transform 0.3s ease;
+            box-sizing: border-box;
         }
         .tool-container:hover {
             transform: scale(1.02);
@@ -81,43 +94,77 @@
             font-weight: bold;
             color: #4A00E0;
         }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 20px;
+            }
+            .tool-container {
+                padding: 15px;
+            }
+            .input-group label {
+                font-size: 14px;
+            }
+            button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 18px;
+            }
+            .input-group label {
+                font-size: 12px;
+            }
+            button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="tool-container" id="calorie-burn-calculator">
-        <h1>Calorie Burn Calculator</h1>
-        <div class="input-group">
-            <label for="running">Running (minutes)</label>
-            <input type="number" id="running" placeholder="Enter minutes" min="0">
+    <div class="container">
+        <!-- Calorie Burn Calculator -->
+        <div class="tool-container" id="calorie-burn-calculator">
+            <h1>Calorie Burn Calculator</h1>
+            <div class="input-group">
+                <label for="running">Running (minutes)</label>
+                <input type="number" id="running" placeholder="Enter minutes" min="0">
+            </div>
+            <div class="input-group">
+                <label for="walking">Walking (minutes)</label>
+                <input type="number" id="walking" placeholder="Enter minutes" min="0">
+            </div>
+            <div class="input-group">
+                <label for="cycling">Cycling (minutes)</label>
+                <input type="number" id="cycling" placeholder="Enter minutes" min="0">
+            </div>
+            <div class="input-group">
+                <label for="swimming">Swimming (minutes)</label>
+                <input type="number" id="swimming" placeholder="Enter minutes" min="0">
+            </div>
+            <button onclick="calculateCalories()">Calculate Total Calories</button>
+            <div class="result" id="calorie-result"></div>
         </div>
-        <div class="input-group">
-            <label for="walking">Walking (minutes)</label>
-            <input type="number" id="walking" placeholder="Enter minutes" min="0">
-        </div>
-        <div class="input-group">
-            <label for="cycling">Cycling (minutes)</label>
-            <input type="number" id="cycling" placeholder="Enter minutes" min="0">
-        </div>
-        <div class="input-group">
-            <label for="swimming">Swimming (minutes)</label>
-            <input type="number" id="swimming" placeholder="Enter minutes" min="0">
-        </div>
-        <button onclick="calculateCalories()">Calculate Total Calories</button>
-        <div class="result" id="calorie-result"></div>
-    </div>
 
-    <div class="tool-container" id="mental-health-journal">
-        <h1>Mental Health Journal</h1>
-        <div class="input-group">
-            <label for="mood">How are you feeling today?</label>
-            <input type="text" id="mood" placeholder="e.g., happy, stressed, relaxed">
+        <!-- Mental Health Journal -->
+        <div class="tool-container" id="mental-health-journal">
+            <h1>Mental Health Journal</h1>
+            <div class="input-group">
+                <label for="mood">How are you feeling today?</label>
+                <input type="text" id="mood" placeholder="e.g., happy, stressed, relaxed">
+            </div>
+            <div class="input-group">
+                <label for="thoughts">Write down your thoughts</label>
+                <textarea id="thoughts" rows="5" placeholder="Express your feelings..."></textarea>
+            </div>
+            <button onclick="saveJournalEntry()">Download Journal Entry</button>
+            <div class="result" id="journal-result"></div>
         </div>
-        <div class="input-group">
-            <label for="thoughts">Write down your thoughts</label>
-            <textarea id="thoughts" rows="5" placeholder="Express your feelings..."></textarea>
-        </div>
-        <button onclick="saveJournalEntry()">Download Journal Entry</button>
-        <div class="result" id="journal-result"></div>
     </div>
 
     <script>
