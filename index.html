@@ -8,6 +8,7 @@
     <meta name="author" content="Your Name">
     <meta name="robots" content="index, follow">
     <title>Calorie Burn Calculator & Mental Health Journal</title>
+    <script defer src="/_vercel/insights/script.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,19 +88,19 @@
         <h1>Calorie Burn Calculator</h1>
         <div class="input-group">
             <label for="running">Running (minutes)</label>
-            <input type="number" id="running" placeholder="Enter minutes">
+            <input type="number" id="running" placeholder="Enter minutes" min="0">
         </div>
         <div class="input-group">
             <label for="walking">Walking (minutes)</label>
-            <input type="number" id="walking" placeholder="Enter minutes">
+            <input type="number" id="walking" placeholder="Enter minutes" min="0">
         </div>
         <div class="input-group">
             <label for="cycling">Cycling (minutes)</label>
-            <input type="number" id="cycling" placeholder="Enter minutes">
+            <input type="number" id="cycling" placeholder="Enter minutes" min="0">
         </div>
         <div class="input-group">
             <label for="swimming">Swimming (minutes)</label>
-            <input type="number" id="swimming" placeholder="Enter minutes">
+            <input type="number" id="swimming" placeholder="Enter minutes" min="0">
         </div>
         <button onclick="calculateCalories()">Calculate Total Calories</button>
         <div class="result" id="calorie-result"></div>
@@ -125,6 +126,11 @@
             const walking = parseInt(document.getElementById('walking').value, 10) || 0;
             const cycling = parseInt(document.getElementById('cycling').value, 10) || 0;
             const swimming = parseInt(document.getElementById('swimming').value, 10) || 0;
+
+            if (running < 0 || walking < 0 || cycling < 0 || swimming < 0) {
+                document.getElementById('calorie-result').textContent = "Please enter positive values for time.";
+                return;
+            }
 
             const totalCalories = (running * 10) + (walking * 4) + (cycling * 8) + (swimming * 9);
 
@@ -153,13 +159,7 @@
             document.body.removeChild(a);
 
             document.getElementById('journal-result').textContent = "Your journal entry has been downloaded.";
-            window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-            </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-            
-
-
-
-      
+        }
+    </script>
 </body>
 </html>
